@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Job Portal Available Endpoints</title>
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 80%;
+            margin: 20px auto;
+        }
+        th, td {
+            border: 1px solid #444;
+            padding: 10px;
+            text-align: left;
+        }
+        th {
+            background-color: #f0f0f0;
+        }
+    </style>
+</head>
+<body>
+    <h2 style="text-align:center">Job Portal Web API Endpoints</h2>
+    <table id="endpointsTable">
+        <thead>
+            <tr>
+                <th>Path</th>
+                <th>HTTP Method</th>
+                <th>Handler Method</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+
+    <script>
+        fetch('/api/endpoints')
+            .then(response => response.json())
+            .then(data => {
+                const table = document.querySelector("#endpointsTable tbody");
+                data.forEach(endpoint => {
+                    const row = `<tr>
+                        <td>${endpoint.path}</td>
+                        <td>${endpoint.method}</td>
+                        <td>${endpoint.handler}</td>
+                    </tr>`;
+                    table.innerHTML += row;
+                });
+            });
+    </script>
+</body>
+</html>

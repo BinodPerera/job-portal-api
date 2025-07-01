@@ -20,8 +20,9 @@ public class SecurityConfig {
         http
             .csrf(csrf -> csrf.disable())
             .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/api/auth/**").permitAll()  // Allow ALL under /api/auth
-                .anyRequest().authenticated()
+                .requestMatchers("/api/auth/**", "/endpoints.html", "/api/endpoints", "/css/**", "/js/**").permitAll()  // Allow ALL under /api/auth
+                .anyRequest()
+                .authenticated()
             );
         return http.build();
     }
