@@ -6,6 +6,7 @@ import com.example.jobportal.service.AuthService;
 
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.UUID;
@@ -15,6 +16,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping("/api/auth")
 public class AuthController {
@@ -28,32 +30,37 @@ public class AuthController {
             @RequestParam("password") String password,
             @RequestParam("role") String role,
             @RequestParam("image") MultipartFile imageFile) {
-        
+
         try {
             String originalFilename = imageFile.getOriginalFilename();
             String imageName = UUID.randomUUID() + "_" + originalFilename;
 
-            // Save file to local directory
+            // ✅ Use absolute path
+            String uploadFolder = System.getProperty("user.dir") + "/uploads";
+            Path uploadDir = Paths.get(uploadFolder);
+
+            if (!Files.exists(uploadDir)) {
+                Files.createDirectories(uploadDir);
+            }
+
+            // ✅ Save file to absolute path
             Files.copy(imageFile.getInputStream(),
-                    Paths.get("uploads", imageName),
+                    uploadDir.resolve(imageName),
                     StandardCopyOption.REPLACE_EXISTING);
 
-            // Build RegisterRequest manually
+            // Create RegisterRequest
             RegisterRequest request = new RegisterRequest();
             request.setUsername(username);
             request.setPassword(password);
             request.setRole(role);
-            request.setImage(imageName);  // store image name only
+            request.setImage(imageName);  // only the file name stored
 
             return ResponseEntity.ok(authService.register(request));
         } catch (IOException e) {
+            e.printStackTrace(); // Still good for debugging
             return ResponseEntity.internalServerError().body(null);
         }
+
     }
 
-
-    @PostMapping("/testing")
-    public void testing(@RequestBody String username){
-        System.out.println("Testing endpoint called with username: " + username);
-    }
 }
