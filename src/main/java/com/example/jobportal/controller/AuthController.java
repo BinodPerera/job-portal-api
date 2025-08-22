@@ -52,7 +52,7 @@ public class AuthController {
             String imageName = UUID.randomUUID() + "_" + originalFilename;
 
             // ✅ Use absolute path
-            String uploadFolder = System.getProperty("user.dir") + "/uploads";
+            String uploadFolder = System.getProperty("user.dir") + "/src/main/resources/static/uploads";
             Path uploadDir = Paths.get(uploadFolder);
 
             if (!Files.exists(uploadDir)) {
@@ -104,6 +104,8 @@ public class AuthController {
         if (token == null || !jwtUtil.validateToken(token)) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("User not logged in");
         }
+        String username = jwtUtil.extractUsername(token);
+        System.out.println(username + " is Authenticated!");
         return ResponseEntity.ok("User is authenticated");
     }
 

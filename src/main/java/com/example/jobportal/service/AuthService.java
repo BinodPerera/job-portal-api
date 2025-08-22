@@ -3,6 +3,7 @@ package com.example.jobportal.service;
 import com.example.jobportal.dto.AuthResponse;
 import com.example.jobportal.dto.LoginRequest;
 import com.example.jobportal.dto.RegisterRequest;
+import com.example.jobportal.dto.UserProfile;
 import com.example.jobportal.model.User;
 import com.example.jobportal.repository.UserRepository;
 import com.example.jobportal.security.JwtUtil;
