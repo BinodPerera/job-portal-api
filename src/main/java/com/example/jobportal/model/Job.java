@@ -21,4 +21,24 @@ public class Job {
     @ManyToOne
     @JoinColumn(name = "company_id")
     private Company company;
+
+    public Long getId(){
+        return id;
+    }
+
+    public String getTitle(){
+        return title;
+    }
+
+    public String getDescription(){
+        return description;
+    }
+
+    public String getCategory(){
+        return category;
+    }
+
+    public String getImage(){
+        return image;
+    }
 }

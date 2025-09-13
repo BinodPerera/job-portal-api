@@ -45,20 +45,6 @@ public class JobController {
             @RequestParam(value = "companyLocation", required = false) String companyLocation,
             @RequestParam(value = "companyLogo", required = false) MultipartFile companyLogo
     ) {
-        // for debug
-        System.out.println("\n");
-        System.out.println("📩 Received request:");
-        System.out.println("title = " + title);
-        System.out.println("description = " + description);
-        System.out.println("category = " + category);
-        System.out.println("image = " + (image != null ? image.getOriginalFilename() : "null"));
-        System.out.println("companyId = " + companyId);
-        System.out.println("companyTitle = " + companyTitle);
-        System.out.println("companyDescription = " + companyDescription);
-        System.out.println("companyLocation = " + companyLocation);
-        System.out.println("companyLogo = " + (companyLogo != null ? companyLogo.getOriginalFilename() : "null"));
-        System.out.println("\n");
-
         try {
             Job job = jobService.createJob(
                     title, description, category, image,
